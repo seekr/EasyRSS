@@ -1,6 +1,8 @@
-*EasyRSS* is an Android app for RSS services compatible with Google Reader API.
+*EasyRSS* was an Android app for RSS services compatible with [Google Reader API](https://freshrss.github.io/FreshRSS/en/developers/06_GoogleReader_API.html).
 
-The recommended RSS back-end service is [FreshRSS](https://freshrss.org/).
+**Archived**: Check alternative open source projects such as [Readrops](https://github.com/readrops/Readrops) or [Capy Reader](https://github.com/jocmp/capyreader).
+
+The recommended RSS back-end service is [FreshRSS](https://github.com/FreshRSS/FreshRSS/).
 
 # Features
 - Sync with RSS services compatible with Google Reader API
