@@ -12,7 +12,7 @@ android {
             }
         }
     }
-
+    namespace 'org.freshrss.easyrss' // ← Use your actual app package
     defaultConfig {
         applicationId "org.freshrss.easyrss"
         minSdkVersion 7
