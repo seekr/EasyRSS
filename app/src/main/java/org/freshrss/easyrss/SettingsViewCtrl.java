@@ -573,11 +573,11 @@ public class SettingsViewCtrl extends AbsViewCtrl implements OnSettingUpdatedLis
     private void showSettingNotificationOn() {
         final ImageView img = (ImageView) view.findViewById(R.id.SwitchNotificationOn);
         final SettingNotificationOn sNotification = new SettingNotificationOn(dataMgr);
-        img.setImageResource(sNotification.getData() ? R.drawable.switch_on : R.drawable.switch_off);
+        img.setImageResource(Boolean.TRUE.equals(sNotification.getData()) ? R.drawable.switch_on : R.drawable.switch_off);
         img.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(final View view) {
-                sNotification.setData(dataMgr, !sNotification.getData());
+                sNotification.setData(dataMgr, !Boolean.TRUE.equals(sNotification.getData()));
                 dataMgr.updateSetting(sNotification.toSetting());
                 showSettingNotificationOn();
             }
