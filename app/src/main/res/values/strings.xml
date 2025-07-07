@@ -122,5 +122,6 @@
     <string name="TxtAccessBrowserChoice">You can access this setting via Settings > Reading > Browser.</string>
     <string name="TxtCopyToClipboard">Copy to clipboard</string>
     <string name="TxtSyncFailed">Sync failed</string>
+    <string name="serviceUrl_helper">e.g. http://somedoma.in/api/greader.php</string>
 
 </resources>

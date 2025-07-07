@@ -2,6 +2,6 @@
 <resources>
 
     <color name="DarkBackground">#101010</color>
-    <color name="NormalBackground">#EFEFEF</color>
+    <color name="NormalBackground">#000000</color>
 
 </resources>

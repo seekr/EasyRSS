@@ -59,7 +59,7 @@ public class NotificationMgr {
                 context.getString(R.string.MsgTickerTextNewItems), System.currentTimeMillis());
         notification.defaults = Notification.FLAG_AUTO_CANCEL;
         final Intent intent = new Intent(context, Home.class);
-        final PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
+        final PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE);
         //TODO: Fixme: `setLatestEventInfo` is removed in Android 6.0 Marshmallow, API 23.
         // See org.freshrss.easyrss.data.readersetting.SettingNotificationOn
         /*

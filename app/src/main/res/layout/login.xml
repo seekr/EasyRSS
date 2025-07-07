@@ -2,14 +2,13 @@
 <org.freshrss.easyrss.view.CachedFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#EFEFEF" >
+    android:background="#000000" >
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:layout_marginBottom="10dip"
-        android:background="#EFEFEF"
         android:orientation="vertical" >
 
         <ImageView
@@ -37,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dip"
             android:layout_marginRight="30dip"
-            android:text="e.g. http://somedoma.in/api/greader.php"
+            android:text="@string/serviceUrl_helper"
             android:textColor="?android:attr/textColorSecondary"
             android:textSize="12sp"
             android:paddingTop="4dp"/>
@@ -81,8 +80,7 @@
                 android:layout_marginBottom="5dip"
                 android:layout_weight="1"
                 android:text="@string/TxtLogin"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textSize="18sp" />
         </LinearLayout>
     </LinearLayout>
 

@@ -78,7 +78,7 @@ final public class NetworkUtils {
     public static void startSyncingTimer(final Context context) {
         final AlarmManager alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         final Intent intent = new Intent(context, SyncingReceiver.class);
-        final PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
+        final PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE);
         alarmMgr.setInexactRepeating(AlarmManager.RTC, System.currentTimeMillis(),
                 AlarmManager.INTERVAL_FIFTEEN_MINUTES, pendingIntent);
     }
