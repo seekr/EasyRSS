@@ -1,7 +1,8 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 29
+    //noinspection GradleDependency
+    compileSdkVersion 33
     useLibrary 'org.apache.http.legacy'
 
     sourceSets {
@@ -15,8 +16,9 @@ android {
     namespace 'org.freshrss.easyrss' // ← Use your actual app package
     defaultConfig {
         applicationId "org.freshrss.easyrss"
-        minSdkVersion 7
-        targetSdkVersion 29
+        minSdkVersion 11
+        //noinspection EditedTargetSdkVersion
+        targetSdkVersion 33
         versionCode 706
         versionName '0.7.6'
     }

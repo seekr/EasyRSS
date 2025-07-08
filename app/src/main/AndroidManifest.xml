@@ -22,7 +22,7 @@
             android:name="org.freshrss.easyrss.Home"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:launchMode="singleInstance"
-            android:theme="@style/Theme.Normal"
+            android:theme="@style/Theme.Dark"
             android:windowSoftInputMode="adjustResize"
             android:exported="true" >
             <intent-filter>
