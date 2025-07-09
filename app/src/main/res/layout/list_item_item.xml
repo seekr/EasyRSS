@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/ListItemItem"
-    style="?listItemBackground"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -35,18 +34,10 @@
 
         <TextView
             android:id="@+id/Title"
-            style="?textColor"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textSize="15dip" />
-
-        <ImageView
-            style="?listItemArrow"
-            android:layout_width="16dip"
-            android:layout_height="fill_parent"
-            android:layout_marginLeft="6dip"
-            android:gravity="center" />
     </LinearLayout>
 
 </LinearLayout>

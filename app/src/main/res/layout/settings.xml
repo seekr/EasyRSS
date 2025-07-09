@@ -81,11 +81,9 @@
                         android:layout_height="2px"
                         android:background="#499FBC" >
                     </View>
-                </LinearLayout>
-
-                <LinearLayout
+                </LinearLayout><LinearLayout
                     android:id="@+id/SettingItemSync"
-                    style="@style/ListItemBackgroundNormal"
+                    style="@style/ListItemBackgroundDark"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -100,7 +98,6 @@
                         android:orientation="vertical" >
 
                         <TextView
-                            style="@style/TextColorNormal"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/TxtSettingAutoSync"
@@ -125,7 +122,6 @@
 
                 <LinearLayout
                     android:id="@+id/SettingImageFetching"
-                    style="@style/ListItemBackgroundNormal"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -140,7 +136,6 @@
                         android:orientation="vertical" >
 
                         <TextView
-                            style="@style/TextColorNormal"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/TxtSettingImageFetching"
@@ -165,7 +160,6 @@
 
                 <LinearLayout
                     android:id="@+id/SettingSyncInterval"
-                    style="@style/ListItemBackgroundNormal"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -180,7 +174,6 @@
                         android:orientation="vertical" >
 
                         <TextView
-                            style="@style/TextColorNormal"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/TxtSettingSyncInterval"
@@ -209,7 +202,6 @@
 
                 <LinearLayout
                     android:id="@+id/SettingImagePrefetching"
-                    style="@style/ListItemBackgroundNormal"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -224,7 +216,6 @@
                         android:orientation="vertical" >
 
                         <TextView
-                            style="@style/TextColorNormal"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/TxtSettingImagePrefetching"
@@ -251,7 +242,6 @@
 
                 <LinearLayout
                     android:id="@+id/SettingImmediateStateSyncing"
-                    style="@style/ListItemBackgroundNormal"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -266,7 +256,6 @@
                         android:orientation="vertical" >
 
                         <TextView
-                            style="@style/TextColorNormal"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/TxtSettingImmediateStateSyncing"
@@ -293,7 +282,6 @@
 
                 <LinearLayout
                     android:id="@+id/SettingHttpsConnection"
-                    style="@style/ListItemBackgroundNormal"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -308,7 +296,6 @@
                         android:orientation="vertical" >
 
                         <TextView
-                            style="@style/TextColorNormal"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/TxtSettingHttpsConnection"
@@ -365,7 +352,6 @@
 
                 <LinearLayout
                     android:id="@+id/SettingMaxItems"
-                    style="@style/ListItemBackgroundNormal"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -380,7 +366,6 @@
                         android:orientation="vertical" >
 
                         <TextView
-                            style="@style/TextColorNormal"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/TxtSettingMaxNoOfItems"
@@ -408,7 +393,6 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    style="@style/ListItemBackgroundNormal"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -423,7 +407,6 @@
                         android:orientation="vertical" >
 
                         <TextView
-                            style="@style/TextColorNormal"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/TxtSettingSpaceCalculation"
@@ -492,7 +475,6 @@
 
                 <LinearLayout
                     android:id="@+id/SettingBrowserChoice"
-                    style="@style/ListItemBackgroundNormal"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -507,7 +489,6 @@
                         android:paddingTop="6dip" >
 
                         <TextView
-                            style="@style/TextColorNormal"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/TxtSettingBrowserChoice"
@@ -533,7 +514,6 @@
 
                 <LinearLayout
                     android:id="@+id/SettingFontSize"
-                    style="@style/ListItemBackgroundNormal"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -548,7 +528,6 @@
                         android:orientation="vertical" >
 
                         <TextView
-                            style="@style/TextColorNormal"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/TxtSettingFontSize"
@@ -577,7 +556,6 @@
 
                 <LinearLayout
                     android:id="@+id/SettingTheme"
-                    style="@style/ListItemBackgroundNormal"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -592,7 +570,6 @@
                         android:orientation="vertical" >
 
                         <TextView
-                            style="@style/TextColorNormal"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/TxtSettingTheme"
@@ -619,7 +596,6 @@
 
                 <LinearLayout
                     android:id="@+id/SettingVolumnKeySwitching"
-                    style="@style/ListItemBackgroundNormal"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -634,7 +610,6 @@
                         android:orientation="vertical" >
 
                         <TextView
-                            style="@style/TextColorNormal"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/TxtSettingVolumnKeySwitching"
@@ -658,7 +633,6 @@
 
                 <LinearLayout
                     android:id="@+id/SettingDecendingItemsOrdering"
-                    style="@style/ListItemBackgroundNormal"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -673,7 +647,6 @@
                         android:orientation="vertical" >
 
                         <TextView
-                            style="@style/TextColorNormal"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/TxtSettingDecendingItemsOrdering"
@@ -697,7 +670,6 @@
 
                 <LinearLayout
                     android:id="@+id/SettingNotificationOn"
-                    style="@style/ListItemBackgroundNormal"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -712,7 +684,6 @@
                         android:orientation="vertical" >
 
                         <TextView
-                            style="@style/TextColorNormal"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/TxtSettingNotificationOn"
@@ -739,7 +710,6 @@
 
                 <LinearLayout
                     android:id="@+id/SettingMarkAllAsReadConfirmation"
-                    style="@style/ListItemBackgroundNormal"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -754,7 +724,6 @@
                         android:orientation="vertical" >
 
                         <TextView
-                            style="@style/TextColorNormal"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/TxtSettingMarkAllAsReadConfirmation"
@@ -812,7 +781,6 @@
 
                 <LinearLayout
                     android:id="@+id/SettingAboutEasyRSS"
-                    style="@style/ListItemBackgroundNormal"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
@@ -839,7 +807,6 @@
 
                 <LinearLayout
                     android:id="@+id/SettingAboutAuthor"
-                    style="@style/ListItemBackgroundNormal"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"

@@ -13,58 +13,64 @@
 
     <LinearLayout
         android:id="@+id/Menu"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_weight="1"
         android:background="@drawable/item_menu_background"
         android:paddingLeft="26dip"
-        android:paddingRight="26dip" >
+        android:paddingRight="26dip">
 
-        <Button
+
+        <ImageButton
             android:id="@+id/BtnPrevious"
-            android:layout_width="40dip"
-            android:layout_height="88dip"
-            android:background="@drawable/menu_item_previous_xml" >
-        </Button>
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:scaleType="centerInside"
+            android:src="@drawable/menu_item_previous_xml" />
 
-        <Button
+        <ImageButton
             android:id="@+id/BtnNext"
-            android:layout_width="40dip"
-            android:layout_height="88dip"
-            android:background="@drawable/menu_item_next_xml" >
-        </Button>
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="48dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/menu_item_next_xml"/>
 
         <View
             android:layout_width="1px"
             android:layout_height="fill_parent"
-            android:layout_marginBottom="35dip"
             android:layout_marginLeft="5dip"
-            android:layout_marginRight="5dip"
             android:layout_marginTop="35dip"
+            android:layout_marginRight="5dip"
+            android:layout_marginBottom="35dip"
             android:background="#66FFFFFF" />
 
-        <Button
+        <ImageButton
             android:id="@+id/BtnAddStar"
-            android:layout_width="40dip"
-            android:layout_height="88dip"
-            android:background="@drawable/menu_item_add_star_xml" >
-        </Button>
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="48dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/menu_item_add_star_xml"/>
 
-        <Button
+        <ImageButton
             android:id="@+id/BtnSharing"
-            android:layout_width="40dip"
-            android:layout_height="88dip"
-            android:background="@drawable/menu_item_sharing_xml" >
-        </Button>
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="48dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/menu_item_sharing_xml"/>
 
-        <Button
+        <ImageButton
             android:id="@+id/BtnOpenLink"
-            android:layout_width="40dip"
-            android:layout_height="88dip"
-            android:background="@drawable/menu_item_open_link_xml" >
-        </Button>
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="48dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/menu_item_open_link_xml"/>
     </LinearLayout>
 
 </org.freshrss.easyrss.view.CachedRelativeLayout>
