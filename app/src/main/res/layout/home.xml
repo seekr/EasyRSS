@@ -84,102 +84,67 @@
             android:visibility="gone"></Button>
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/HomeNavWrap"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="#404040"
-        android:orientation="vertical" >
-
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="2dp"
-            android:background="@drawable/up_shadow" >
-        </View>
-
-        <LinearLayout
-            android:id="@+id/HomeNav"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingTop="3dp"
-            android:paddingBottom="1dp">
-
-            <Button
-                android:id="@+id/BtnHomeStarred"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="@string/TxtStarred"
-                android:textColor="#AAA"
-                android:textSize="13sp"/>
-
-            <Button
-                android:id="@+id/BtnHomeAll"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="@string/TxtAll"
-                android:textColor="#AAA"
-                android:textSize="13sp"/>
-
-            <Button
-                android:id="@+id/BtnHomeUnread"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="@string/TxtUnread"
-                android:textColor="#AAA"
-                android:textSize="13sp"/>
-        </LinearLayout>
-
-        <View
-            android:layout_width="70dip"
-            android:layout_height="5px"
-            android:layout_gravity="center"
-            android:background="#499FBC" >
-        </View>
-
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="3px"
-            android:layout_gravity="center"
-            android:background="#499FBC" >
-        </View>
-    </LinearLayout>
-
-    <RelativeLayout
+    <TabHost
+        android:id="@+id/HomeTabHost"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_weight="1" >
+        android:layout_weight="1">
 
-        <org.freshrss.easyrss.view.HorizontalPager
-            android:id="@+id/HomeListPager"
+        <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent" >
+            android:layout_height="fill_parent"
+            android:orientation="vertical">
 
-            <include
-                android:id="@+id/HomeListStarred"
-                layout="@layout/standard_list" >
-            </include>
+            <TabWidget
+                android:id="@android:id/tabs"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="#404040" />
 
-            <include
-                android:id="@+id/HomeListAll"
-                layout="@layout/standard_list" >
-            </include>
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="3px"
+                android:background="#499FBC" />
 
-            <include
-                android:id="@+id/HomeListUnread"
-                layout="@layout/standard_list" >
-            </include>
-        </org.freshrss.easyrss.view.HorizontalPager>
+            <FrameLayout
+                android:id="@android:id/tabcontent"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
 
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="3px"
-            android:layout_alignParentBottom="true"
-            android:background="@drawable/down_shadow" >
-        </View>
-    </RelativeLayout>
+                <LinearLayout
+                    android:id="@+id/TabStarred"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:orientation="vertical">
+
+                    <include
+                        android:id="@+id/HomeListStarred"
+                        layout="@layout/standard_list" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/TabAll"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:orientation="vertical">
+
+                    <include
+                        android:id="@+id/HomeListAll"
+                        layout="@layout/standard_list" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/TabUnread"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:orientation="vertical">
+
+                    <include
+                        android:id="@+id/HomeListUnread"
+                        layout="@layout/standard_list" />
+                </LinearLayout>
+            </FrameLayout>
+        </LinearLayout>
+    </TabHost>
 
 </org.freshrss.easyrss.view.CachedLinearLayout>

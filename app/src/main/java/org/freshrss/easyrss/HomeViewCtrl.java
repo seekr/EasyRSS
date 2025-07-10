@@ -31,8 +31,6 @@ import org.freshrss.easyrss.network.NetworkMgr;
 import org.freshrss.easyrss.network.SubscriptionDataSyncer;
 import org.freshrss.easyrss.network.TagDataSyncer;
 import org.freshrss.easyrss.view.AbsViewCtrl;
-import org.freshrss.easyrss.view.HorizontalPager;
-import org.freshrss.easyrss.view.HorizontalPagerListener;
 import org.freshrss.easyrss.view.PopupMenu;
 import org.freshrss.easyrss.view.PopupMenuItem;
 import org.freshrss.easyrss.view.PopupMenuListener;
@@ -41,20 +39,24 @@ import android.app.Dialog;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
+import android.view.GestureDetector;
+import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.MarginLayoutParams;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class HomeViewCtrl extends AbsViewCtrl implements HorizontalPagerListener, PopupMenuListener,
+public class HomeViewCtrl extends AbsViewCtrl implements PopupMenuListener,
         OnSettingUpdatedListener {
     private class HomeListAdapterListener implements OnItemTouchListener {
         final private int viewType;
@@ -86,10 +88,8 @@ public class HomeViewCtrl extends AbsViewCtrl implements HorizontalPagerListener
     final private HomeListWrapper lstWrapperAll;
     final private HomeListWrapper lstWrapperStarred;
     final private HomeListWrapper lstWrapperUnread;
-    final private Button btnStarred;
-    final private Button btnAll;
-    final private Button btnUnread;
     final private PopupMenu popupMenu;
+    private TabHost tabHost;
     private boolean isAvailable;
 
     public HomeViewCtrl(final DataMgr dataMgr, final Context context) {
@@ -135,10 +135,6 @@ public class HomeViewCtrl extends AbsViewCtrl implements HorizontalPagerListener
             }
         });
 
-        btnStarred = (Button) view.findViewById(R.id.BtnHomeStarred);
-        btnAll = (Button) view.findViewById(R.id.BtnHomeAll);
-        btnUnread = (Button) view.findViewById(R.id.BtnHomeUnread);
-
         if (GlobalItemDataSyncer.hasInstance() || SubscriptionDataSyncer.hasInstance() || TagDataSyncer.hasInstance()) {
             setProgressBarVisibility(true);
         } else {
@@ -171,32 +167,82 @@ public class HomeViewCtrl extends AbsViewCtrl implements HorizontalPagerListener
         setProgressBarVisibility(true);
     }
 
-    private void initPager() {
-        final HorizontalPager pager = (HorizontalPager) view.findViewById(R.id.HomeListPager);
-        pager.setListener(this);
+    private void initTabHost() {
+        tabHost = (TabHost) view.findViewById(R.id.HomeTabHost);
+        tabHost.setup();
+        
+        // Setup tab for Starred
+        TabHost.TabSpec starredSpec = tabHost.newTabSpec("starred");
+        starredSpec.setIndicator(context.getString(R.string.TxtStarred));
+        starredSpec.setContent(R.id.TabStarred);
+        tabHost.addTab(starredSpec);
+        
+        // Setup tab for All
+        TabHost.TabSpec allSpec = tabHost.newTabSpec("all");
+        allSpec.setIndicator(context.getString(R.string.TxtAll));
+        allSpec.setContent(R.id.TabAll);
+        tabHost.addTab(allSpec);
+        
+        // Setup tab for Unread
+        TabHost.TabSpec unreadSpec = tabHost.newTabSpec("unread");
+        unreadSpec.setIndicator(context.getString(R.string.TxtUnread));
+        unreadSpec.setContent(R.id.TabUnread);
+        tabHost.addTab(unreadSpec);
+        
+        // Set tab text color
+        for (int i = 0; i < tabHost.getTabWidget().getChildCount(); i++) {
+            TextView tv = (TextView) tabHost.getTabWidget().getChildAt(i).findViewById(android.R.id.title);
+            if (tv != null) {
+                tv.setTextColor(0xFFAAAAAA);
+            }
+        }
+        
+        // Load saved tab position
         final String sViewType = dataMgr.getSettingByName(Setting.SETTING_GLOBAL_VIEW_TYPE);
         final int viewType = (sViewType == null) ? Home.VIEW_TYPE_ALL : Integer.valueOf(sViewType);
-        pager.setCurrentScreen(viewType, false);
-
-        btnAll.setOnClickListener(new OnClickListener() {
+        tabHost.setCurrentTab(viewType);
+        
+        // Update text color for selected tab
+        TextView tv = (TextView) tabHost.getTabWidget().getChildAt(viewType).findViewById(android.R.id.title);
+        if (tv != null) {
+            tv.setTextColor(0xFFFFFFFF);
+        }
+        
+        // Set tab change listener
+        tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
             @Override
-            public void onClick(final View view) {
-                pager.setCurrentScreen(1, true);
+            public void onTabChanged(String tabId) {
+                // Reset all tab text colors
+                for (int i = 0; i < tabHost.getTabWidget().getChildCount(); i++) {
+                    TextView tv = (TextView) tabHost.getTabWidget().getChildAt(i).findViewById(android.R.id.title);
+                    if (tv != null) {
+                        tv.setTextColor(0xFFAAAAAA);
+                    }
+                }
+                
+                // Set selected tab text color
+                TextView tv = (TextView) tabHost.getCurrentTabView().findViewById(android.R.id.title);
+                if (tv != null) {
+                    tv.setTextColor(0xFFFFFFFF);
+                }
+                
+                // Save current tab position
+                dataMgr.updateSetting(new Setting(Setting.SETTING_GLOBAL_VIEW_TYPE, String.valueOf(tabHost.getCurrentTab())));
             }
         });
-        btnStarred.setOnClickListener(new OnClickListener() {
+        
+        // Add swipe gesture support
+        final FrameLayout tabContent = tabHost.getTabContentView();
+        final GestureDetector gestureDetector = new GestureDetector(context, new TabGestureListener());
+        
+        // Apply touch listener to tab content
+        tabContent.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(final View view) {
-                pager.setCurrentScreen(0, true);
+            public boolean onTouch(View v, MotionEvent event) {
+                return gestureDetector.onTouchEvent(event);
             }
         });
-        btnUnread.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(final View view) {
-                pager.setCurrentScreen(2, true);
-            }
-        });
-
+        
         final View btnRefresh = view.findViewById(R.id.BtnHomeRefresh);
         btnRefresh.setOnClickListener(new OnClickListener() {
             @Override
@@ -206,6 +252,45 @@ public class HomeViewCtrl extends AbsViewCtrl implements HorizontalPagerListener
                 }
             }
         });
+    }
+    
+    /**
+     * Gesture listener for handling swipe gestures on tabs
+     */
+    private class TabGestureListener extends SimpleOnGestureListener {
+        private static final int SWIPE_MIN_DISTANCE = 120;
+        private static final int SWIPE_MAX_OFF_PATH = 250;
+        private static final int SWIPE_THRESHOLD_VELOCITY = 200;
+        
+        @Override
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+            try {
+                // Check if the swipe was more horizontal than vertical
+                if (Math.abs(e1.getY() - e2.getY()) > SWIPE_MAX_OFF_PATH) {
+                    return false;
+                }
+                
+                // Right to left swipe
+                if (e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+                    // Move to next tab (right)
+                    if (tabHost.getCurrentTab() < tabHost.getTabWidget().getChildCount() - 1) {
+                        tabHost.setCurrentTab(tabHost.getCurrentTab() + 1);
+                        return true;
+                    }
+                } 
+                // Left to right swipe
+                else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+                    // Move to previous tab (left)
+                    if (tabHost.getCurrentTab() > 0) {
+                        tabHost.setCurrentTab(tabHost.getCurrentTab() - 1);
+                        return true;
+                    }
+                }
+            } catch (Exception e) {
+                // Do nothing
+            }
+            return false;
+        }
     }
 
     @Override
@@ -226,7 +311,7 @@ public class HomeViewCtrl extends AbsViewCtrl implements HorizontalPagerListener
         dataMgr.addOnTagUpdatedListener(lstWrapperUnread);
         NetworkMgr.getInstance().addListener(this);
 
-        initPager();
+        initTabHost();
 
         final View btnMore = view.findViewById(R.id.BtnHomeMore);
         btnMore.setOnClickListener(new OnClickListener() {
@@ -270,45 +355,6 @@ public class HomeViewCtrl extends AbsViewCtrl implements HorizontalPagerListener
     @Override
     public void onItemClick(final int id) {
         // TODO empty method
-    }
-
-    @Override
-    public void onScreenSwitch(final int currentScreen) {
-        setHeaderLocation();
-        switch (currentScreen) {
-        case 0:
-            btnStarred.setTextColor(0xFFFFFFFF);
-            break;
-        case 1:
-            btnAll.setTextColor(0xFFFFFFFF);
-            break;
-        case 2:
-            btnUnread.setTextColor(0xFFFFFFFF);
-            break;
-        default:
-            break;
-        }
-        dataMgr.updateSetting(new Setting(Setting.SETTING_GLOBAL_VIEW_TYPE, String.valueOf(currentScreen)));
-    }
-
-    @Override
-    public void onScrollChanged(final int l, final int t, final int oldl, final int oldt) {
-        btnStarred.setTextColor(0xFF999999);
-        btnAll.setTextColor(0xFF999999);
-        btnUnread.setTextColor(0xFF999999);
-        setHeaderLocation();
-    }
-
-    private void setHeaderLocation() {
-        final View pager = view.findViewById(R.id.HomeListPager);
-        final View homeNav = view.findViewById(R.id.HomeNav);
-        final int btnWidth = btnAll.getMeasuredWidth();
-        final MarginLayoutParams params = new MarginLayoutParams(homeNav.getLayoutParams());
-        params.setMargins(
-                (pager.getMeasuredWidth() - btnWidth) / 2 - pager.getScrollX() * btnWidth / pager.getMeasuredWidth(),
-                0, 0, 0);
-        final LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(params);
-        homeNav.setLayoutParams(layoutParams);
     }
 
     private void setProgressBarVisibility(final boolean isVisible) {
