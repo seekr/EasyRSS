@@ -47,29 +47,63 @@ import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
 import android.view.inputmethod.InputMethodManager;
 
-
+/**
+ * Main activity class for the EasyRSS application.
+ * Handles the primary UI flow, view management, and user interactions.
+ * Implements ViewCtrlListener for view controller callbacks and HorizontalSwipeViewListener for swipe gestures.
+ */
 public class Home extends Activity implements ViewCtrlListener, HorizontalSwipeViewListener {
-    /*
-     * Same order as it is in home.xml
+    /**
+     * Constants representing different view types in the home screen.
+     * Same order as defined in home.xml layout file.
      */
     public static final int VIEW_TYPE_STARRED = 0;
     public static final int VIEW_TYPE_ALL = 1;
     public static final int VIEW_TYPE_UNREAD = 2;
 
+    /**
+     * Bundle key for indicating whether to show settings screen on startup.
+     */
     private static final String BUNDLE_KEY_SHOW_SETTINGS = "showSettings";
 
+    /**
+     * Duration in milliseconds for swipe animations.
+     */
     private static final long SWIPE_ANIMATION_TIME = 400;
 
+    /**
+     * The horizontal swipe view container that handles swipe gestures.
+     */
     private HorizontalSwipeView swipeView;
+    
+    /**
+     * Manager for handling different views in the application.
+     */
     private ViewManager viewMgr;
+    
+    /**
+     * Manager for handling application data.
+     */
     private DataMgr dataMgr;
+    
+    /**
+     * Tracks the total horizontal distance of the current swipe gesture.
+     */
     private int totalSwipeX;
 
+    /**
+     * Default constructor.
+     * Initializes the totalSwipeX value to zero.
+     */
     public Home() {
         super();
         this.totalSwipeX = 0;
     }
 
+    /**
+     * Handles the cancellation of a swipe gesture.
+     * Determines whether to complete the swipe forward or backward based on the distance swiped.
+     */
     @Override
     public void cancelSwipe() {
         final int screenWidth = swipeView.getWidth();
@@ -81,6 +115,13 @@ public class Home extends Activity implements ViewCtrlListener, HorizontalSwipeV
         totalSwipeX = 0;
     }
 
+    /**
+     * Intercepts key events before they are dispatched to the view hierarchy.
+     * Handles volume key navigation when enabled and menu key actions.
+     * 
+     * @param event The key event to be processed
+     * @return True if the event was handled, false otherwise
+     */
     @Override
     public boolean dispatchKeyEvent(final KeyEvent event) {
         final int action = event.getAction();
@@ -126,11 +167,19 @@ public class Home extends Activity implements ViewCtrlListener, HorizontalSwipeV
         return super.dispatchKeyEvent(event);
     }
 
+    /**
+     * Called when a back navigation is needed from a view controller.
+     * Delegates to onBackPressed().
+     */
     @Override
     public void onBackNeeded() {
         onBackPressed();
     }
 
+    /**
+     * Handles the back button press.
+     * Manages navigation between different views and handles exit from the app.
+     */
     @Override
     public void onBackPressed() {
         if (viewMgr.getViewCount() > 1 && viewMgr.getLastViewResId() != R.layout.home) {
@@ -151,6 +200,12 @@ public class Home extends Activity implements ViewCtrlListener, HorizontalSwipeV
         }
     }
 
+    /**
+     * Called when the activity is first created.
+     * Initializes the application, sets up the UI, and handles account authentication.
+     * 
+     * @param savedInstanceState The saved instance state bundle
+     */
     @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -191,12 +246,22 @@ public class Home extends Activity implements ViewCtrlListener, HorizontalSwipeV
         NetworkUtils.startSyncingTimer(this);
     }
 
+    /**
+     * Called when the activity is about to be destroyed.
+     * Cleans up resources by clearing all views.
+     */
     @Override
     public void onDestroy() {
         super.onDestroy();
         viewMgr.clearViews();
     }
 
+    /**
+     * Handles requests to view an image.
+     * Creates and pushes an ImageViewCtrl to display the image.
+     * 
+     * @param imgPath Path to the image to be displayed
+     */
     @Override
     public void onImageViewRequired(final String imgPath) {
         final ImageViewCtrl ivc = new ImageViewCtrl(dataMgr, this, imgPath);
@@ -205,6 +270,13 @@ public class Home extends Activity implements ViewCtrlListener, HorizontalSwipeV
         swipeView.setRightSwipeValid(false);
     }
 
+    /**
+     * Handles selection of an item list (feed).
+     * Creates and pushes a FeedViewCtrl to display the selected feed.
+     * 
+     * @param uid Unique identifier of the selected feed
+     * @param viewType Type of view to display (STARRED, ALL, or UNREAD)
+     */
     @Override
     public void onItemListSelected(final String uid, final int viewType) {
         final FeedViewCtrl fvc = new FeedViewCtrl(dataMgr, this, uid, viewType);
@@ -213,6 +285,12 @@ public class Home extends Activity implements ViewCtrlListener, HorizontalSwipeV
         swipeView.setRightSwipeValid(true);
     }
 
+    /**
+     * Handles selection of an individual item.
+     * Creates and pushes a VerticalItemViewCtrl to display the selected item.
+     * 
+     * @param uid Unique identifier of the selected item
+     */
     @Override
     public void onItemSelected(final String uid) {
         final VerticalItemViewCtrl ivc = new VerticalItemViewCtrl(dataMgr, this, uid,
@@ -222,6 +300,12 @@ public class Home extends Activity implements ViewCtrlListener, HorizontalSwipeV
         swipeView.setRightSwipeValid(true);
     }
 
+    /**
+     * Handles the result of a login attempt.
+     * If successful, displays the home view and initiates syncing if configured.
+     * 
+     * @param succeeded True if login was successful, false otherwise
+     */
     @Override
     public void onLogin(final boolean succeeded) {
         if (succeeded) {
@@ -238,6 +322,10 @@ public class Home extends Activity implements ViewCtrlListener, HorizontalSwipeV
         }
     }
 
+    /**
+     * Handles logout requests.
+     * Displays a confirmation dialog and performs logout if confirmed.
+     */
     @Override
     public void onLogoutRequired() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(this,
@@ -278,6 +366,13 @@ public class Home extends Activity implements ViewCtrlListener, HorizontalSwipeV
         builder.show();
     }
 
+    /**
+     * Handles requests to view a website.
+     * Creates and pushes a WebpageItemViewCtrl to display the selected webpage.
+     * 
+     * @param uid Unique identifier of the item whose webpage should be displayed
+     * @param isMobilized True if the mobilized version should be displayed, false otherwise
+     */
     @Override
     public void onWebsiteViewSelected(final String uid, final boolean isMobilized) {
         final WebpageItemViewCtrl mivc = new WebpageItemViewCtrl(dataMgr, this, uid, isMobilized);
@@ -286,12 +381,22 @@ public class Home extends Activity implements ViewCtrlListener, HorizontalSwipeV
         swipeView.setRightSwipeValid(false);
     }
 
+    /**
+     * Called when the activity is paused (no longer in foreground).
+     * Starts notifications to keep the user informed of updates.
+     */
     @Override
     public void onPause() {
         super.onPause();
         NotificationMgr.getInstance().startNotification();
     }
 
+    /**
+     * Handles requests to reload the application.
+     * Creates a new intent to restart the app, optionally showing settings on restart.
+     * 
+     * @param showSettings True if settings should be displayed after reload, false otherwise
+     */
     @Override
     public void onReloadRequired(final boolean showSettings) {
         final Intent intent = getApplicationContext().getPackageManager().getLaunchIntentForPackage(
@@ -306,12 +411,20 @@ public class Home extends Activity implements ViewCtrlListener, HorizontalSwipeV
         startActivity(intent);
     }
 
+    /**
+     * Called when the activity is resumed (comes to foreground).
+     * Stops notifications as they are no longer needed when the app is visible.
+     */
     @Override
     public void onResume() {
         super.onResume();
         NotificationMgr.getInstance().stopNotification();
     }
 
+    /**
+     * Handles requests to display the settings screen.
+     * Creates and pushes a SettingsViewCtrl.
+     */
     @Override
     public void onSettingsSelected() {
         final SettingsViewCtrl svc = new SettingsViewCtrl(dataMgr, this);
@@ -320,11 +433,19 @@ public class Home extends Activity implements ViewCtrlListener, HorizontalSwipeV
         swipeView.setRightSwipeValid(false);
     }
 
+    /**
+     * Handles requests to sync data.
+     * Initiates manual syncing of data.
+     */
     @Override
     public void onSyncRequired() {
         NetworkUtils.doGlobalSyncing(this, SettingSyncMethod.SYNC_METHOD_MANUAL);
     }
 
+    /**
+     * Handles animation for canceling a swipe gesture.
+     * Animates the view back to its original position.
+     */
     private void swipeBackward() {
         if (totalSwipeX < 0) {
             totalSwipeX = 0;
@@ -345,6 +466,10 @@ public class Home extends Activity implements ViewCtrlListener, HorizontalSwipeV
         viewMgr.restoreTopView();
     }
 
+    /**
+     * Handles animation for completing a swipe gesture.
+     * Animates the transition to the next view.
+     */
     private void swipeForward() {
         if (totalSwipeX < 0) {
             totalSwipeX = 0;
@@ -368,18 +493,31 @@ public class Home extends Activity implements ViewCtrlListener, HorizontalSwipeV
         }
     }
 
+    /**
+     * Handles left swipe gestures.
+     * Cancels the current swipe and resets tracking.
+     */
     @Override
     public void swipeLeft() {
         swipeBackward();
         totalSwipeX = 0;
     }
 
+    /**
+     * Handles right swipe gestures.
+     * Completes the current swipe and resets tracking.
+     */
     @Override
     public void swipeRight() {
         swipeForward();
         totalSwipeX = 0;
     }
 
+    /**
+     * Tracks and animates the view during an ongoing swipe gesture.
+     * 
+     * @param deltaX The horizontal distance moved in this update
+     */
     @Override
     public void swipeTo(final int deltaX) {
         totalSwipeX += -deltaX;
