@@ -36,3 +36,4 @@ The original [Fork](https://github.com/Alkarex/EasyRSS) by [Alexandre Alapetite]
 * (fr) [EasyRSS : L’application android opensource de la semaine | Wilfried Caruel](http://wilfriedcaruel.svnet.fr/2014/05/easyrss-lapplication-android-opensource-de-la-semaine/)
 
  
+ 
